@@ -20,23 +20,24 @@ import java.util.Scanner;
 
 public class SungJukV3 {
     public static void main(String[] args) {
-//    변수 선언
+//      변수 선언
+        final int studenNum = 3;
 
-        String[] name = new String[3];
-        int[] kor = new int[3];
-        int[] eng = new int[3];
-        int[] mat = new int[3];
-        int[] sum = new int[3];
-        double[] mean = new double[3];
-        char[] grd = new char[3];
+        String[] name = new String[studenNum];
+        int[] kor = new int[studenNum];
+        int[] eng = new int[studenNum];
+        int[] mat = new int[studenNum];
+        int[] sum = new int[studenNum];
+        double[] mean = new double[studenNum];
+        char[] grd = new char[studenNum];
         String fmt = "이름 : %s\n국어 : %d\n영어 : %d\n수학 : %d\n총점 : %d\n평균 : %s\n학점 : %c";
 
-        String[] result= new String[3];
+        String[] result= new String[studenNum];
 
 //    처리
         Scanner sc = new Scanner(System.in);
 
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<studenNum; i++) {
         System.out.println((i+1) + "번째 학생 성적 입력중...");
         System.out.print("이름을 입력하세요 : ");
         name[i] = sc.next();
@@ -51,7 +52,7 @@ public class SungJukV3 {
         mat[i] = sc.nextInt();
 
         sum[i] = kor[i] + eng[i] + mat[i];
-        mean[i] = (double) sum[i] / 3;
+        mean[i] = (double) sum[i] / studenNum;
 
 
         switch ((int) (mean[i] / 10)) {
@@ -78,7 +79,7 @@ public class SungJukV3 {
     }
 //        String.valueOf(값)
 //        숫자를 문자로 변환
-        for (int i=0;i<3;i++) {
+        for (int i=0;i<studenNum;i++) {
             result[i] = String.format(fmt, name[i], kor[i], eng[i], mat[i], sum[i], String.valueOf(mean[i]), grd[i]);
 //    결과 출력
         /*System.out.println("이름 : "+ name + "\n국어 : " + kor + "\n영어 : " + eng + "\n수학 : " + mat + "\n--------" +
