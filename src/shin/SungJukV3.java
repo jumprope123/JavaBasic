@@ -30,7 +30,7 @@ public class SungJukV3 {
         int[] sum = new int[studenNum];
         double[] mean = new double[studenNum];
         char[] grd = new char[studenNum];
-        String fmt = "이름 : %s\n국어 : %d\n영어 : %d\n수학 : %d\n총점 : %d\n평균 : %s\n학점 : %c";
+        String fmt = "이름 : %s\n국어 : %d\n영어 : %d\n수학 : %d\n총점 : %d\n평균 : %.2f\n학점 : %c";
 
         String[] result= new String[studenNum];
 
@@ -40,16 +40,20 @@ public class SungJukV3 {
     for (int i=0; i<studenNum; i++) {
         System.out.println((i+1) + "번째 학생 성적 입력중...");
         System.out.print("이름을 입력하세요 : ");
-        name[i] = sc.next();
+        name[i] = sc.nextLine();
 
         System.out.print("국어를 입력하세요 : ");
-        kor[i] = sc.nextInt();
+        kor[i] = Integer.parseInt(sc.nextLine());
 
         System.out.print("영어를 입력하세요 : ");
-        eng[i] = sc.nextInt();
+        eng[i] = Integer.parseInt(sc.nextLine());
 
         System.out.print("수학을 입력하세요 : ");
-        mat[i] = sc.nextInt();
+        mat[i] = Integer.parseInt(sc.nextLine());
+//        sc.skip("\r\n|[\n\r]");
+
+//        수학 성적 입력시 같이 입력된 enter키가 다음 데이터(이름) 입력시 입력값으로 자동으로 전달됨.
+//        그러한 상황을 해결하기 위해 미리 엔터키를 제거하는 코드 삽입
 
         sum[i] = kor[i] + eng[i] + mat[i];
         mean[i] = (double) sum[i] / studenNum;
@@ -57,20 +61,11 @@ public class SungJukV3 {
 
         switch ((int) (mean[i] / 10)) {
             case 10:
-            case 9:
-                grd[i] = '수';
-                break;
-            case 8:
-                grd[i] = '우';
-                break;
-            case 7:
-                grd[i] = '미';
-                break;
-            case 6:
-                grd[i] = '양';
-                break;
-            default:
-                grd[i] = '가';
+            case 9: grd[i] = '수'; break;
+            case 8: grd[i] = '우'; break;
+            case 7: grd[i] = '미'; break;
+            case 6: grd[i] = '양'; break;
+            default: grd[i] = '가';
         }
 
 
@@ -80,7 +75,7 @@ public class SungJukV3 {
 //        String.valueOf(값)
 //        숫자를 문자로 변환
         for (int i=0;i<studenNum;i++) {
-            result[i] = String.format(fmt, name[i], kor[i], eng[i], mat[i], sum[i], String.valueOf(mean[i]), grd[i]);
+            result[i] = String.format(fmt, name[i], kor[i], eng[i], mat[i], sum[i], mean[i], grd[i]);
 //    결과 출력
         /*System.out.println("이름 : "+ name + "\n국어 : " + kor + "\n영어 : " + eng + "\n수학 : " + mat + "\n--------" +
                 "\n총점 : " + sum + "\n평균 : " + mean + "\n학점 : " + grd);*/
@@ -91,4 +86,3 @@ public class SungJukV3 {
         }
     }
 }
-
