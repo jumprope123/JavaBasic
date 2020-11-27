@@ -1,5 +1,6 @@
 package semiProject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,10 +14,10 @@ import java.util.Scanner;
 public class EmployeeV1Service extends EmployeeV1GenericService {
 
     List<EmployeeVO> empdata = new ArrayList<>();
-
+    EmployeeVO emp;
     @Override
     public void newEmployee() {
-        EmployeeVO emp = new EmployeeVO(0,"","","","","","",0,0,0,0);
+        emp = new EmployeeVO(0,"","","","","","",0,0,0,0);
         Scanner sc = new Scanner(System.in);
         System.out.print("사번을 입력하세요 : ");
         emp.setEmpNo(Integer.parseInt(sc.nextLine()));
@@ -138,7 +139,6 @@ public class EmployeeV1Service extends EmployeeV1GenericService {
         int checkCnt = 0;
         for (EmployeeVO ev : empdata){
             if (ev.getEmpNo() == emp.getEmpNo()){
-                emp = ev;
                 break;
             }
             checkCnt++;
