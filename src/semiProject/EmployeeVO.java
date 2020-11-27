@@ -6,10 +6,10 @@ public class EmployeeVO {
     private String lName;
     private String eMail;
     private String phone;
-    private  String hDate;
+    private String hDate;
     private String jobId;
     private int sal;
-    private double cmmm;
+    private double comm;
     private int mgrId;
     private int deptId;
 
@@ -17,7 +17,7 @@ public class EmployeeVO {
     public EmployeeVO() {
     }
 
-    public EmployeeVO(int empNo, String fName, String lName, String eMail, String phone, String hDate, String jobId, int sal, double cmmm, int mgrId, int deptId) {
+    public EmployeeVO(int empNo, String fName, String lName, String eMail, String phone, String hDate, String jobId, int sal, double comm, int mgrId, int deptId) {
         this.empNo = empNo;
         this.fName = fName;
         this.lName = lName;
@@ -26,15 +26,13 @@ public class EmployeeVO {
         this.hDate = hDate;
         this.jobId = jobId;
         this.sal = sal;
-        this.cmmm = cmmm;
+        this.comm = comm;
         this.mgrId = mgrId;
         this.deptId = deptId;
     }
 
 //세터즈 게터즈
-    public int getEmpNo() {
-        return empNo;
-    }
+    public int getEmpNo() {return empNo;}
 
     public void setEmpNo(int empNo) {
         this.empNo = empNo;
@@ -96,13 +94,9 @@ public class EmployeeVO {
         this.sal = sal;
     }
 
-    public double getCmmm() {
-        return cmmm;
-    }
+    public double getCmmm() {return comm;}
 
-    public void setCmmm(double cmmm) {
-        this.cmmm = cmmm;
-    }
+    public void setCmmm(double comm) {this.comm = comm;}
 
     public int getMgrId() {
         return mgrId;
