@@ -1,5 +1,9 @@
 package sungjukTest;
 
+import shin.SungJukV10DAO;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class SungJukService extends SungJukGeneral{
@@ -26,7 +30,6 @@ public class SungJukService extends SungJukGeneral{
 
     @Override
     public void newSungJuk() {
-        SungJukVO sjv = new SungJukVO();
         System.out.print("이름을 입력하세요");
         String name = scan.nextLine();
         System.out.print("국어성적을 입력하세요");
@@ -35,8 +38,10 @@ public class SungJukService extends SungJukGeneral{
         int eng = Integer.parseInt(scan.nextLine());
         System.out.print("수학성적을 입력하세요");
         int mat = Integer.parseInt(scan.nextLine());
+        SungJukVO sjv = new SungJukVO(name,kor,eng,mat);
         computeSungJuk(sjv);
-        String result = SungJukDOA.insertSungJuk(sjv);
+        String result = SungJukDAO.insertSQL(sjv);
+        System.out.println(result);
 
 
     }
@@ -55,21 +60,53 @@ public class SungJukService extends SungJukGeneral{
 
     @Override
     public void readSungJuk() {
-        super.readSungJuk();
+        ArrayList<SungJukVO> sjvs = SungJukDAO.selectSQL();
+        Iterator<SungJukVO> iter = sjvs.iterator();
+        StringBuilder sb = new StringBuilder();
+        String fmt = "%8s %8s %8s %8s\n";
+        String result = String.format(fmt,"sjno","name","mean","grd");
+        sb.append(result);
+        while (iter.hasNext()){
+            SungJukVO sv = iter.next();
+            result = String.format(fmt,sv.getSjno(),sv.getName(),sv.getMean(),sv.getGrd());
+            sb.append(result);
+        }
+        System.out.print(sb.toString());
+
     }
 
     @Override
     public void readOneSungJuk() {
-        super.readOneSungJuk();
+        SungJukVO sv = SungJukDAO.selectOneSQL();
+        String fmt = " %s %s %s %s %s %s %s %s %s";
+        String result = String.format(fmt,sv.getSjno(),sv.getName(),sv.getKor(),sv.getEng(),sv.getMean(),sv.getSum(),sv.getMean(),sv.getGrd(),sv.getRegdate());
+        System.out.println(result);
     }
 
     @Override
     public void modifySungJuk() {
-        super.modifySungJuk();
+        SungJukVO sj = new SungJukVO();
+
+        System.out.print("수정할 성적번호를 입력하세요");
+        sj.setSjno(scan.nextInt());
+        System.out.print("수정할 국어성적을 입력하세요");
+        sj.setKor(scan.nextInt());
+        System.out.print("수정할 영어성적을 입력하세요");
+        sj.setEng(scan.nextInt());
+        System.out.print("수정할 수학성적을 입력하세요");
+        sj.setMat(scan.nextInt());
+        computeSungJuk(sj);
+
+        String result = SungJukDAO.updateSungJuk(sj);
+        System.out.println(result);
     }
 
     @Override
     public void deleteSungJuk() {
-        super.deleteSungJuk();
+        System.out.print("삭제할 성적번호를 입력하세요");
+        int sjno = scan.nextInt();
+        String result = SungJukDAO.deleteSungJuk(sjno);
+        System.out.println(result);
+
     }
 }

@@ -15,6 +15,30 @@ public class SungJukVO {
         public SungJukVO() {
         }
 
+        public SungJukVO(int sjno, String name, double mean, char grd) {
+                this.sjno = sjno;
+                this.name = name;
+                this.mean = mean;
+                this.grd = grd;
+        }
+
+        public SungJukVO(String name, int kor, int eng, int mat) {
+                this.name = name;
+                this.kor = kor;
+                this.eng = eng;
+                this.mat = mat;
+        }
+
+        public SungJukVO(String name, int kor, int eng, int mat, int sum, double mean, char grd) {
+                this.name = name;
+                this.kor = kor;
+                this.eng = eng;
+                this.mat = mat;
+                this.sum = sum;
+                this.mean = mean;
+                this.grd = grd;
+        }
+
         public SungJukVO(int sjno, String name, int kor, int eng, int mat, int sum, double mean, char grd, String regdate) {
                 this.sjno = sjno;
                 this.name = name;

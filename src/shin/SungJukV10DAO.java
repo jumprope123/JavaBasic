@@ -96,4 +96,46 @@ public class SungJukV10DAO {
         JDBCUtil.destroyConn(conn,pstmt,rs);
         return sj;
     }
+
+
+    public static String removeSungJuk(int sjno) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String result = "삭제 실패!";
+        conn = SungjukJDBC.makeConn();
+        try {
+            pstmt = conn.prepareStatement(SungjukJDBC.deleteSungjuk);
+            pstmt.setInt(1,sjno);
+            int cnt = pstmt.executeUpdate();
+            if (cnt > 0) result = "삭제 성공!";
+        } catch (SQLException throwables) {
+            System.out.println("sql 구문오류");
+        }
+        SungjukJDBC.destroyConn(conn,pstmt);
+        return result;
+    }
+
+    public static String modifySungJuk(SungJukVO sv) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String result = "성적 업데이트 실패!";
+
+        conn = SungjukJDBC.makeConn();
+        try {
+            pstmt = conn.prepareStatement(SungjukJDBC.updateSungJuk);
+            pstmt.setInt(1, sv.getKor());
+            pstmt.setInt(2,sv.getEng());
+            pstmt.setInt(3,sv.getMat());
+            pstmt.setInt(4,sv.getSum());
+            pstmt.setDouble(5,sv.getMean());
+            pstmt.setString(6,String.valueOf(sv.getGrd()));
+            pstmt.setInt(7,sv.getSjno());
+            int cnt = pstmt.executeUpdate();
+            if (cnt>0) result = "업데이트 완료!";
+        } catch (SQLException throwables) {
+            System.out.println("sql구문오류");
+        }
+        SungjukJDBC.destroyConn(conn,pstmt);
+        return result;
+    }
 }

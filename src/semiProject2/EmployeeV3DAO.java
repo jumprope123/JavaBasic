@@ -1,5 +1,6 @@
 package semiProject2;
 
+import jdk.nashorn.internal.runtime.OptimisticReturnFilters;
 import shin.JDBCUtil;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class EmployeeV3DAO {
 
     public static String insertEmp(EmployeeVO empvo) {
-        String result = "";
+        String result = "실행 실패!";
         Connection conn = null;
         PreparedStatement pstmt = null;
         conn = EmployeeJDBC.makeConn();
@@ -76,10 +77,7 @@ public class EmployeeV3DAO {
         return evo;
     }
 
-    public static EmployeeVO readOneEMP() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("검색하실 사원번호를 입력하세요");
-        int inputid = Integer.parseInt(scan.nextLine());
+    public static EmployeeVO readOneEMP(int inputid) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -109,5 +107,45 @@ public class EmployeeV3DAO {
         }
         EmployeeJDBC.destroyConn(conn,pstmt,rs);
         return ev;
+    }
+
+    public static String deleteSQL(int empid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        conn = EmployeeJDBC.makeConn();
+        String result = "실패!";
+        try {
+            pstmt = conn.prepareStatement(EmployeeJDBC.deleteSQL);
+            pstmt.setInt(1, empid);
+            int cnt = pstmt.executeUpdate();
+            if (cnt > 0) result = "실행 성공 !";
+
+        } catch (SQLException throwables) {
+            System.out.println("sql구문오류");
+        }
+        EmployeeJDBC.destroyConn(conn,pstmt);
+        return result;
+    }
+
+    public static String modifySQL(EmployeeVO ev) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String result = "실패!";
+        conn = EmployeeJDBC.makeConn();
+        try {
+            pstmt = conn.prepareStatement(EmployeeJDBC.modifySQL);
+            pstmt.setString(1,ev.getfName());
+            pstmt.setString(2,ev.getlName());
+            pstmt.setString(3,ev.geteMail());
+            pstmt.setString(4,ev.getPhone());
+            pstmt.setString(5,ev.gethDate());
+            pstmt.setInt(6,ev.getEmpNo());
+            int cnt = pstmt.executeUpdate();
+            if (cnt > 0) result = "실행 성공 !";
+        } catch (SQLException throwables) {
+            System.out.println("sql구문오류");
+        }
+        EmployeeJDBC.destroyConn(conn,pstmt);
+        return result;
     }
 }

@@ -6,6 +6,7 @@ import shin.sungjukV8.SungJukV8Service;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class SungJukV10Service  {
@@ -84,14 +85,22 @@ public class SungJukV10Service  {
     public void readSungJuk() {
         String fmt = "번호:%s, 이름:%s, 국어:%d , 영어:%d, 수학:%d, 등록일:%s\n";
         StringBuilder sb = new StringBuilder();
-
+        StringBuilder sb2 = new StringBuilder();
         ArrayList<SungJukVO> sjs = SungJukV10DAO.selectSungJuk();
 
         for (SungJukVO sj : sjs){
             String result = String.format(fmt,sj.getSjno(),sj.getName(),sj.getKor(),sj.getEng(),sj.getMat(),sj.getRegdate().substring(0,10));
             sb.append(result);
         }
+        Iterator<SungJukVO> iter = sjs.iterator();
+        while (iter.hasNext()){
+            SungJukVO sv = iter.next();
+            String result = String.format(fmt,sv.getSjno(),sv.getName(),sv.getKor(),sv.getEng(),sv.getMat(),sv.getRegdate().substring(0,10));
+            sb2.append(result);
+        }
         System.out.println(sb.toString());
+        System.out.println("--------------");
+        System.out.println(sb2.toString());
     }
 
     public void readOneSungJuk() {
@@ -107,6 +116,34 @@ public class SungJukV10Service  {
                 sj.getEng(),sj.getMat(),sj.getSum(),sj.getMean(),
                 sj.getGrd(),sj.getRegdate());
 
+        System.out.println(result);
+    }
+
+    // 수정할 성적 데이터를 매개변수로 넘겨주면, 성적 테이블에서 해당 데이터를 수정함
+    public void modifySungJuk() {
+
+        SungJukVO sv = new SungJukVO();
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("수정할 넘버를 입력하세요 : ");
+        sv.setSjno(sc.nextInt());
+        System.out.print("국어를 입력하세요 : ");
+        sv.setKor(sc.nextInt());
+        System.out.print("영어를 입력하세요 : ");
+        sv.setEng(sc.nextInt());
+        System.out.print("수학을 입력하세요 : ");
+        sv.setMat(sc.nextInt());
+        computeSungJuk(sv);
+        String result = SungJukV10DAO.modifySungJuk(sv);
+        System.out.println(result);
+    }
+
+    public void removeSungJuk() {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("삭제하실 sjno를 입력하세요");
+        int sjno = scan.nextInt();
+        String result = SungJukV10DAO.removeSungJuk(sjno);
         System.out.println(result);
     }
 }

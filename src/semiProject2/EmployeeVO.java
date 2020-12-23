@@ -13,6 +13,15 @@ public class EmployeeVO {
     private int mgrId;
     private int deptId;
 
+    public EmployeeVO(int empNo, String fName, String lName, String eMail, String phone, String hDate) {
+        this.empNo = empNo;
+        this.fName = fName;
+        this.lName = lName;
+        this.eMail = eMail;
+        this.phone = phone;
+        this.hDate = hDate;
+    }
+
     public EmployeeVO() {
     }
 

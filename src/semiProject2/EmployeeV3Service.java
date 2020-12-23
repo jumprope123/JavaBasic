@@ -52,14 +52,17 @@ public class EmployeeV3Service extends EmployeeGeneric{
 
         EmployeeVO empvo = new EmployeeVO(empid,empfname,emplname,empemail,emppnum,emphdate,empjid,empsal,empcm,empmid,dpmtid);
         String result = EmployeeV3DAO.insertEmp(empvo);
+        System.out.println(result);
     }
 
     @Override
     public void readEmployee() {
         ArrayList<EmployeeVO> evo = EmployeeV3DAO.readEMP();
         StringBuilder sb = new StringBuilder();
-        String fmt = "%s, %s, %s, %s, %s\n";// id,fname,lname,jobid,dept
+        String fmt = "%12s %12s %12s %12s %12s\n";// id,fname,lname,jobid,dept
         String result;
+        result = String.format(fmt,"empNo","Fname","Lname","jobId","DeptId");
+        sb.append(result);
 
         Iterator<EmployeeVO> itr = evo.iterator();
         while (itr.hasNext()){
@@ -74,8 +77,11 @@ public class EmployeeV3Service extends EmployeeGeneric{
 
     @Override
     public void readOneEmployee() {
-        EmployeeVO ev = EmployeeV3DAO.readOneEMP();
-        String fmt = "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s";
+        Scanner scan = new Scanner(System.in);
+        System.out.println("검색하실 사원번호를 입력하세요");
+        int inputid = Integer.parseInt(scan.nextLine());
+        EmployeeVO ev = EmployeeV3DAO.readOneEMP(inputid);
+        String fmt = "%10s %10s %10s %10s %10s %10s %10s %10s %10s %10s %10s";
 
         String result = String.format(fmt, ev.getEmpNo(),ev.getfName(),ev.getlName(),ev.geteMail(),ev.getPhone(),ev.gethDate()
         ,ev.getJobId(),ev.getSal(),ev.getComm(),ev.getMgrId(),ev.getDeptId());
@@ -85,11 +91,31 @@ public class EmployeeV3Service extends EmployeeGeneric{
 
     @Override
     public void modifyEmployee() {
-        super.modifyEmployee();
+        System.out.print("수정하실 직원 번호를 입력하세요");
+        int empid = Integer.parseInt(scan.nextLine());
+        System.out.print("직원 성을 입력하세요");
+        String empfname = scan.nextLine();
+        System.out.print("직원 이름을 입력하세요");
+        String emplname = scan.nextLine();
+        System.out.print("직원 이메일을 입력하세요");
+        String empemail = scan.nextLine();
+        System.out.print("직원 폰번호를 입력하세요");
+        String emppnum = scan.nextLine();
+        System.out.print("직원 고용일을 입력하세요");
+        String emphdate = scan.nextLine();
+
+        EmployeeVO ev = new EmployeeVO(empid,empfname,emplname,empemail,emppnum,emphdate);
+
+        String result = EmployeeV3DAO.modifySQL(ev);
+        System.out.println(result);
+
     }
 
     @Override
     public void deleteEmployee() {
-        super.deleteEmployee();
+        System.out.println("삭제하실 사원번호를 입력하세요");
+        int empid = Integer.parseInt(scan.nextLine());
+        String result = EmployeeV3DAO.deleteSQL(empid);
+        System.out.println(result);
     }
 }
